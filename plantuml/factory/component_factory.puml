@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+!include factory_base.puml
+
+class Internal::Factory::ComponentFactory<T_COMPONENT>
+{
+    {field} -std::function<std::shared_ptr<T_COMPONENT>()> _constructor
+    {method} +ComponentFactory(const std::function<std::shared_ptr<T_COMPONENT>()> &constructor)
+    {method} +ComponentFactory(ComponentFactory&& fac) <<move>>
+    {method} +std::shared_ptr<T_COMPONENT> get_instance()
+}
+
+Internal::Factory::ComponentFactory --|> Internal::Factory::FactoryBase
+
+@enduml

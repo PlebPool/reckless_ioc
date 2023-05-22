@@ -1,0 +1,12 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+set separator ::
+
+interface External::Config::Config
+{
+    {abstract} {method} +void configure(IoCContainer& container) = 0
+    {abstract} {method} +Config() = default <<destructor>>
+}
+
+@enduml

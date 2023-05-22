@@ -1,0 +1,11 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+set separator ::
+
+interface Internal::Factory::FactoryBase
+{
+    {method} +~FactoryBase() <<destructor>>
+}
+
+@enduml

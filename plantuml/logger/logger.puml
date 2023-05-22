@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+set separator ::
+
+class Logger::NamedLogger
+{
+    {method} +explicit NamedLogger(std::string name)
+    {method} +void error()
+    {method} +void log()
+    {method} +NamedLogger& operator<<(const std::string&& s) <<override>>
+    {method} +void clear()
+    {method} -void makeLog<T_STREAM>(T_STREAM& os, const char* context)
+
+    {field} -std::string _name
+    {field} -std::vector<char> _buffer
+}
+
+class Logger::Logger<C>
+{
+    {method} +explicit Logger() : NamedLogger(demangleName<C>())
+    {method} +std::string demangleName<T>()
+}
+
+Logger::Logger -left-|> Logger::NamedLogger
+
+@enduml

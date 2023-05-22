@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Context -> Strategy1 : algorithm()
+Strategy1 --> Context : return result
+Context -> Strategy2 : algorithm()
+Strategy2 --> Context : return result
+
+'Alice -> Bob: Authentication Request
+'Bob --> Alice: Authentication Response
+'
+'Alice -> Bob: Another authentication Request
+'Alice <-- Bob: another authentication Response
+@enduml

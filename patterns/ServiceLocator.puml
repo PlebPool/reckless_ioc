@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class "Class A" {
+    {field} -locator: CoffeeBrewerServiceLocator
+}
+
+class CoffeeBrewerServiceLocator {
+    {method} +get_service(<<Contextualize lookup parameters>>...): CoffeeBrewerService
+}
+
+"Class A" -down-> CoffeeBrewerServiceLocator : Requests CoffeeBrewer
+
+interface CoffeeBrewerService
+
+class EspressoMaker implements CoffeeBrewerService
+class IrishCoffeeMaker implements CoffeeBrewerService
+
+CoffeeBrewerServiceLocator .left.> CoffeeBrewerService
+
+'abstract class AbstractList
+'abstract AbstractCollection
+'interface List
+'interface Collection
+'
+'List <|-- AbstractList
+'Collection <|-- AbstractCollection
+'
+'Collection <|- List
+'AbstractCollection <|- AbstractList
+'AbstractList <|-- ArrayList
+'
+'class ArrayList {
+'Object[] elementData
+'size()
+'}
+'
+'enum TimeUnit {
+'DAYS
+'HOURS
+'MINUTES
+'}
+
+@enduml

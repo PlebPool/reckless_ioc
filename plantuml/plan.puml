@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class IoCContainer
+class Config
+class Application
+class Factory
+class Component
+
+Factory ..> Component : <<creates>>
+IoCContainer }o-- Config : <<Configures Components>>
+IoCContainer }o.right.> Factory : <<creates>>
+
+Application -> IoCContainer : <<Exposes>>
+
+Config -> Component
+@enduml

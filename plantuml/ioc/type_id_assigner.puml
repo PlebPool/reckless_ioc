@@ -1,0 +1,12 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+set separator ::
+
+class Internal::IoC::TypeIdAssigner
+{
+    {field} {static} -component_id_t s_current = 0
+    {method} {static} +component_id_t get_type_id<T>()
+}
+
+@enduml

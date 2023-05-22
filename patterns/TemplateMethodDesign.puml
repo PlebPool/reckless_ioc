@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Template {
+    {method} +run()
+    {method} {abstract} +method2()
+    {method} {abstract} +method3()
+}
+note left of Template
+run()
+{
+    method2();
+    method3();
+}
+end note
+
+class Actual {
+    {method} +method2()
+    {method} +method3()
+}
+
+Actual -left-|> Template
+note right of Actual
+method2()
+{
+    // Implementation
+}
+
+method3()
+{
+    // Implementation
+}
+end note
+
+
+
+'abstract class AbstractList
+'abstract AbstractCollection
+'interface List
+'interface Collection
+'
+'List <|-- AbstractList
+'Collection <|-- AbstractCollection
+'
+'Collection <|- List
+'AbstractCollection <|- AbstractList
+'AbstractList <|-- ArrayList
+'
+'class ArrayList {
+'Object[] elementData
+'size()
+'}
+'
+'enum TimeUnit {
+'DAYS
+'HOURS
+'MINUTES
+'}
+
+@enduml

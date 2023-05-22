@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+!include type_id_assigner.puml
+
+class Internal::IoC::IoCContainer
+{
+    {field} -TypeIdAssigner _type_id_assigner
+    {field} -std::map<component_id_t, std::shared_ptr<FactoryBase>> _factories
+    {field} -Logger<IoCContainer> _logger
+
+    {method} +void registerConcreteComponent<T, ...T_DEPS>()
+    {method} +void registerInterfaceComponent<T_IDENT, T_CONCRETE, ...T_DEPS>()
+    {method} +std::shared_ptr<T_REQUESTED> getComponent<T_REQUESTED>()
+    {method} +std::shared_ptr<T_REQUESTED> getComponent<T_REQUESTED>(const char* reason)
+}
+
+Internal::IoC::IoCContainer o-- Internal::IoC::TypeIdAssigner
+
+@enduml

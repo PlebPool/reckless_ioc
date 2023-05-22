@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Context {
+    {method} +operation()
+}
+
+note left of Context
+operation()
+{
+    ...
+    strategy.algorithm()
+    ...
+}
+end note
+
+interface Strategy {
+    {method} algorithm()
+}
+
+Context -> Strategy
+
+class Strategy1 {
+    {method} algorithm()
+}
+class Strategy2 {
+    {method} algorithm()
+}
+
+Strategy1 -up-|> Strategy
+Strategy2 -up-|> Strategy
+
+'abstract class AbstractList
+'abstract AbstractCollection
+'interface List
+'interface Collection
+'
+'List <|-- AbstractList
+'Collection <|-- AbstractCollection
+'
+'Collection <|- List
+'AbstractCollection <|- AbstractList
+'AbstractList <|-- ArrayList
+'
+'class ArrayList {
+'Object[] elementData
+'size()
+'}
+'
+'enum TimeUnit {
+'DAYS
+'HOURS
+'MINUTES
+'}
+
+@enduml

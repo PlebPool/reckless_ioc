@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+set separator ::
+
+!include config/config.puml
+
+class External::Application::OrderedConfig
+{
+    {method} +OrderedConfig(int orderInt, std::shared_ptr<Config> &&config, std::string name)
+    {field} +int orderInt
+    {field} +std::shared_ptr<Config> config
+    {field} +std::string name
+    {field} {abstract} ~OrderedConfig() = default
+}
+
+class External::Application::ApplicationContext
+{
+    {field} {static} -std::vector<OrderedConfig> _configurations;
+    {field} {static} -Logger<ApplicationContext> _logger;
+    {field} {static} -IoCContainer _container;
+    {method} {static} +void start()
+    {method} {static} +void addConfig<T>(int order)
+    {method} {static} +void addConfig(int order, const std::string& name)
+    {method} {static} +void addConfig(std::unique_ptr<Config> config, int order, const std::string& name)
+    {method} {static} +std::shared_ptr<T_REQUESTED> getComponent()
+    {method} {static} +std::shared_ptr<T_REQUESTED> getComponent(const char* reason)
+}
+
+External::Config::Config -left-o "1" External::Application::OrderedConfig
+External::Application::OrderedConfig --* "1..." External::Application::ApplicationContext
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+!include factory/component_factory.puml
+!include ioc/ioc_container.puml
+!include logger/logger.puml
+!include application/ApplicationContext.puml
+
+set separator ::
+
+Internal::IoC::IoCContainer o-up- Logger::Logger
+Internal::IoC::IoCContainer "1..." *-right- Internal::Factory::ComponentFactory
+External::Application::ApplicationContext --> Internal::IoC::IoCContainer : <<exposes>>
+Logger::Logger --o External::Application::ApplicationContext
+
+@enduml

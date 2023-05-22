@@ -1,12 +1,12 @@
-#include "library.h"
 #include "include/log/logger.h"
 #include "include/factory/component_factory.h"
 #include "include/ioc/ioc_container.h"
 #include "include/application/ApplicationContext.h"
 
 #include <iostream>
-#include <utility>
-#include <netinet/in.h>
+#ifdef __unix__
+    #include <netinet/in.h>
+#endif
 
 class TestDep
 {
@@ -36,7 +36,7 @@ public:
     explicit Test(std::shared_ptr<TestDep> dep) : _dep(std::move(dep)) {}
 };
 
-
+#ifdef __unix__
 class TcpConnection
 {
 public:
@@ -54,6 +54,18 @@ private:
     int _sock_fd;
     Logger<TcpConnection> _logger;
 };
+
+class TcpConfig : public Config
+{
+public:
+    TcpConfig() = default;
+
+    void configure(IoCContainer& container) override
+    {
+        container.registerConcreteComponent<TcpConnection, Test>();
+    }
+};
+#endif
 
 class InConstructorFetcher
 {
@@ -82,17 +94,6 @@ public:
     }
 };
 
-class TcpConfig : public Config
-{
-public:
-    TcpConfig() = default;
-
-    void configure(IoCContainer& container) override
-    {
-        container.registerConcreteComponent<TcpConnection, Test>();
-    }
-};
-
 int main()
 {
     NamedLogger log("Main");
@@ -101,7 +102,9 @@ int main()
 
     // Registrerar konfigurationer.
     ApplicationContext::addConfig<TestConfig>(0);
+#ifdef __unix__
     ApplicationContext::addConfig<TcpConfig>(1);
+#endif
 
     // Exekverar konfigurationer.
     ApplicationContext::start();
@@ -118,7 +121,9 @@ int main()
     // Borde hämta en instans av "TestIdent" i klassens konstruktör.
     ApplicationContext::getComponent<InConstructorFetcher>("Concrete - by user");
 
+#ifdef __unix__
     // Hämtar en instans av typ "TcpConnection" (konfigurerats i "TcpConfig").
     // Detta kommer kasta en error då konstruktör koden kommer misslyckas p.ga icke-kompatibla protokoll.
     std::shared_ptr<TcpConnection> tcpConnection = ApplicationContext::getComponent<TcpConnection>("Concrete - by user");
+#endif
 }

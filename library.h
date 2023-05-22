@@ -1,6 +1,0 @@
-#ifndef RECKLESS_IOC_LIBRARY_H
-#define RECKLESS_IOC_LIBRARY_H
-
-void hello();
-
-#endif //RECKLESS_IOC_LIBRARY_H
